@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.card-Create {
+  width: 1440px;
+  height: 1056px;
+  margin: 0 auto;
+  text-align: center;
+}

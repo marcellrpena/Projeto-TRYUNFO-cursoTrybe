@@ -1,0 +1,26 @@
+.form-add-card {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 1056px;
+  padding-top: 80px;
+  width: 763px;
+}
+
+.input-form {
+  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.space-inline {
+  display: flex;
+  gap: 5px;
+}
+
+.btn {
+  width: 100px;
+}
