@@ -12,7 +12,15 @@ code {
     monospace;
 }
 
+.body-game {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+}
+
 .card-Create {
+  display: flex;
   width: 1440px;
   height: 1056px;
   margin: 0 auto;
