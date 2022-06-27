@@ -20,7 +20,7 @@ class Form extends React.Component {
     return (
       <div className="form-add-card">
         <h1>Adicionar Nova Carta</h1>
-        <div className="input-form">
+        <form className="input-form">
           <label htmlFor="Nome" className="mb-3 input-form">
             <h5>Nome</h5>
             <input
@@ -29,7 +29,7 @@ class Form extends React.Component {
               name="cardName"
               type="text"
               value={ cardName }
-              onChange={ onInputChange }
+              onChange={ (e) => onInputChange(e) }
               data-testid="name-input"
               placeholder="Digite o Nome"
             />
@@ -60,7 +60,7 @@ class Form extends React.Component {
               placeholder="Atributo 01"
               id="atr01"
               min={ 0 }
-              max={ 100 }
+              max={ 90 }
             />
           </label>
           <label htmlFor="atr02" className="mb-3 input-group">
@@ -75,7 +75,7 @@ class Form extends React.Component {
               placeholder="Atributo 02"
               id="atr02"
               min={ 0 }
-              max={ 100 }
+              max={ 90 }
             />
           </label>
           <label htmlFor="atr03" className="mb-3 input-group">
@@ -90,7 +90,7 @@ class Form extends React.Component {
               placeholder="Atributo 03"
               id="atr03"
               min={ 0 }
-              max={ 100 }
+              max={ 90 }
             />
           </label>
           <label htmlFor="Imagem-Link" className="mb-3 input-group">
@@ -132,16 +132,16 @@ class Form extends React.Component {
             />
             <span className="form-check-label">Trunfo</span>
           </label>
-        </div>
-        <button
-          className="btn btn-outline-success"
-          type="button"
-          disabled={ isSaveButtonDisabled }
-          data-testid="save-button"
-          onClick={ onSaveButtonClick }
-        >
-          Salvar
-        </button>
+          <button
+            className="btn btn-outline-success"
+            type="submit"
+            disabled={ isSaveButtonDisabled }
+            data-testid="save-button"
+            onClick={ onSaveButtonClick }
+          >
+            Salvar
+          </button>
+        </form>
       </div>
     );
   }

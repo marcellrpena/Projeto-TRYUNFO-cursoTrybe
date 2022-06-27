@@ -8,15 +8,33 @@ class App extends React.Component {
     this.state = {
       cardName: '',
       cardDescription: '',
-      cardAttr1: '',
-      cardAttr2: '',
-      cardAttr3: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
       cardImage: '',
       cardRare: '',
       cardTrunfo: false,
       hasTrunfo: false,
-      isSaveButtonDisabled: false,
+      isSaveButtonDisabled: true,
     };
+  }
+
+  verificaValues = () => {
+    this.setState((prevState) => {
+      const { cardAttr1, cardAttr2, cardAttr3 } = prevState;
+      const attrSoma = (
+        parseInt(cardAttr1, 10) + parseInt(cardAttr2, 10) + parseInt(cardAttr3, 10)
+      );
+      const limit = 210;
+      const maior90 = 90;
+      const menor0 = 0;
+      return ({
+        isSaveButtonDisabled: Object
+          .values(prevState)
+          .some((prop) => (
+            prop === '' || prop > maior90 || prop < menor0 || attrSoma > limit)),
+      });
+    });
   }
 
   onSaveButtonClick = (event) => {
@@ -28,7 +46,9 @@ class App extends React.Component {
   onInputChange = (event) => {
     const { target } = event;
     this.setState({
-      [target.name]: target.type === 'checkbox' ? target.checked : target.value });
+      [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+    });
+    this.verificaValues();
   }
 
   render() {
