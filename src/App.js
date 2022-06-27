@@ -43,7 +43,6 @@ class App extends React.Component {
   onSaveButtonClick = (event) => {
     event.preventDefault();
     this.setState((prevState) => ({
-      dataCards: [...prevState.dataCards, prevState],
       cardName: '',
       cardDescription: '',
       cardAttr1: '0',
@@ -51,6 +50,8 @@ class App extends React.Component {
       cardAttr3: '0',
       cardImage: '',
       cardRare: 'normal',
+      cardTrunfo: false,
+      dataCards: [...prevState.dataCards, prevState],
     }));
   }
 
@@ -58,6 +59,7 @@ class App extends React.Component {
     const { target } = event;
     this.setState({
       [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+      hasTrunfo: target.type === 'checkbox' && target.checked,
     });
     this.verificaValues();
   }
@@ -91,6 +93,7 @@ class App extends React.Component {
             isSaveButtonDisabled={ isSaveButtonDisabled }
             onInputChange={ this.onInputChange }
             onSaveButtonClick={ this.onSaveButtonClick }
+            formCardData={ this.state }
           />
           <Card
             cardName={ cardName }

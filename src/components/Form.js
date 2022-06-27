@@ -13,7 +13,7 @@ class Form extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      /* hasTrunfo, */
+      hasTrunfo,
       isSaveButtonDisabled,
       onSaveButtonClick,
       onInputChange } = this.props;
@@ -121,18 +121,29 @@ class Form extends React.Component {
               <option value="muito raro">muito raro</option>
             </select>
           </label>
-          <label htmlFor="checkbox" className="mb-3 space-inline">
-            <input
-              type="checkbox"
-              checked={ cardTrunfo }
-              onChange={ onInputChange }
-              name="cardTrunfo"
-              data-testid="trunfo-input"
-              className="form-check-input"
-              id="checkbox"
-            />
-            <span className="form-check-label">Trunfo</span>
-          </label>
+          {
+            !hasTrunfo
+              ? (
+                <label
+                  htmlFor="checkbox"
+                  className="mb-3 space-inline"
+                >
+                  <input
+                    type="checkbox"
+                    checked={ cardTrunfo }
+                    onChange={ onInputChange }
+                    name="cardTrunfo"
+                    data-testid="trunfo-input"
+                    className="form-check-input"
+                    id="checkbox"
+                  />
+                  <span className="form-check-label">Trunfo</span>
+                </label>
+              )
+              : (
+                <p>Você já tem um Super Trunfo em seu baralho</p>
+              )
+          }
           <button
             className="btn btn-outline-success"
             type="submit"
@@ -157,7 +168,7 @@ Form.propTypes = {
   cardImage: PropTypes.string.isRequired,
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
-  /* hasTrunfo: PropTypes.bool.isRequired, */
+  hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onSaveButtonClick: PropTypes.func.isRequired,
