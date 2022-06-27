@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import data from './components/data';
 
 class App extends React.Component {
   constructor() {
@@ -12,10 +13,11 @@ class App extends React.Component {
       cardAttr2: '0',
       cardAttr3: '0',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      dataCards: data,
     };
   }
 
@@ -25,6 +27,7 @@ class App extends React.Component {
       const attrSoma = (
         parseInt(cardAttr1, 10) + parseInt(cardAttr2, 10) + parseInt(cardAttr3, 10)
       );
+      console.log(attrSoma);
       const limit = 210;
       const maior90 = 90;
       const menor0 = 0;
@@ -38,9 +41,17 @@ class App extends React.Component {
   }
 
   onSaveButtonClick = (event) => {
-    const { target } = event;
-    console.log(target);
-    /* this.setState({ isSaveButtonDisabled: target.value }); */
+    event.preventDefault();
+    this.setState((prevState) => ({
+      dataCards: [...prevState.dataCards, prevState],
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+    }));
   }
 
   onInputChange = (event) => {

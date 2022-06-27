@@ -17,11 +17,12 @@ class Form extends React.Component {
       isSaveButtonDisabled,
       onSaveButtonClick,
       onInputChange } = this.props;
+
     return (
       <div className="form-add-card">
         <h1>Adicionar Nova Carta</h1>
         <form className="input-form">
-          <label htmlFor="Nome" className="mb-3 input-form">
+          <label htmlFor="Nome" required className="mb-3 input-form">
             <h5>Nome</h5>
             <input
               className="form-control"
