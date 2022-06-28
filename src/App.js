@@ -79,7 +79,7 @@ class App extends React.Component {
   removeCard = (index) => {
     this.setState((prevState) => ({
       dataCards: prevState.dataCards.filter((card, idx) => idx !== index && card),
-      hasTrunfo: !prevState.dataCards[index].cardTrunfo,
+      hasTrunfo: !(prevState.hasTrunfo && prevState.dataCards[index].cardTrunfo),
     }));
   }
 
