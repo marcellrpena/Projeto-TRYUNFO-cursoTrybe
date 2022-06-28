@@ -19,12 +19,13 @@ class Card extends React.Component {
         <div className="card-internal">
           <div className="name-image">
             <h4 className="card-name" data-testid="name-card">{ cardName }</h4>
-            <img
-              className="card-image"
-              data-testid="image-card"
-              src={ cardImage }
-              alt={ cardName }
-            />
+            <div className="card-image">
+              <img
+                data-testid="image-card"
+                src={ cardImage }
+                alt={ cardName }
+              />
+            </div>
           </div>
           <div className="card-description">
             <p

@@ -17,8 +17,12 @@ class App extends React.Component {
         cardRare: 'normal',
         cardTrunfo: false,
       },
+      filter: {
+        filterName: '',
+      },
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      datafilter: [],
       dataCards: [],
     };
   }
@@ -76,6 +80,17 @@ class App extends React.Component {
     this.verificaValues(); /* valida se as novas informações são suficientes para ativar o botão salvar */
   }
 
+  fullFilter = (e) => {
+    const { target } = e;
+    this.setState((prevState) => ({
+      filter: {
+        filterName: target.value,
+      },
+      datafilter: prevState.dataCards
+        .filter((card) => card[target.name].includes(target.value)),
+    }));
+  }
+
   removeCard = (index) => {
     this.setState((prevState) => ({
       dataCards: prevState.dataCards.filter((card, idx) => idx !== index && card),
@@ -86,9 +101,13 @@ class App extends React.Component {
   render() {
     const {
       info,
+      filter,
       hasTrunfo,
       dataCards,
+      datafilter,
       isSaveButtonDisabled } = this.state;
+    const fullfilter = (
+      datafilter.length === 0 && filter.filterName === '' ? dataCards : datafilter);
     return (
       <div className="body-game">
         <h1>Trunfo</h1>
@@ -110,26 +129,33 @@ class App extends React.Component {
             />
           </div>
         </section>
-        <section>
-          <aside>
+        <section className="all-cards">
+          <aside className="left-side">
             <h1>Todas as cartas</h1>
+            <input
+              data-testid="name-filter"
+              type="text"
+              name="cardName"
+              placeholder="Nome da Carta"
+              value={ filter.filterName }
+              onChange={ (e) => this.fullFilter(e) }
+            />
           </aside>
-          <aside>
-            {
-              dataCards.map((card, index) => (
-                <div key={ index }>
-                  <Card { ...card } />
-                  <button
-                    data-testid="delete-button"
-                    type="button"
-                    onClick={ () => this.removeCard(index) }
-                  >
-                    Excluir
-                  </button>
-                </div>
-              ))
-            }
-          </aside>
+          {
+            fullfilter.map((card, index) => (
+              <div key={ index } className="all-card">
+                <Card { ...card } />
+                <button
+                  className="btn btn-outline-danger"
+                  data-testid="delete-button"
+                  type="button"
+                  onClick={ () => this.removeCard(index) }
+                >
+                  Excluir
+                </button>
+              </div>
+            ))
+          }
         </section>
       </div>
     );
