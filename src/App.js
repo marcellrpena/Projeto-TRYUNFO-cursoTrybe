@@ -18,9 +18,10 @@ class App extends React.Component {
         cardRare: 'normal',
         cardTrunfo: false,
       },
-      filter: {
+      filtered: {
         cardName: '',
         cardRare: 'todas',
+        cardTrunfo: false,
       },
       hasTrunfo: false,
       isSaveButtonDisabled: true,
@@ -46,6 +47,20 @@ class App extends React.Component {
       });
     });
   }
+
+  verificaFiltro = (target) => {
+    this.setState((prevState) => ({
+      datafilter: target
+        .type === 'checkbox' ? prevState.dataCards
+          .filter((trunfo) => trunfo.cardTrunfo === true) : prevState.dataCards
+          .filter((card) => (
+            target.type === 'select-one' ? (
+              card[target.name] === target.value
+            ) : card[target.name].includes(target.value)
+          )),
+    }
+    ));
+  };
 
   onSaveButtonClick = (event) => {
     event.preventDefault();
@@ -84,23 +99,17 @@ class App extends React.Component {
 
   fullFilter = (e) => {
     const { target } = e;
-    console.log(target.type);
     this.setState((prevState) => {
-      const { filter } = prevState;
-      delete filter[target.name];
+      const { filtered } = prevState;
+      delete filtered[target.name];
       return {
-        filter: {
-          ...filter,
+        filtered: {
+          ...filtered,
           [target.name]: target.type === 'checkbox' ? target.checked : target.value,
         },
-        datafilter: prevState.dataCards
-          .filter((card) => (
-            target.type === 'select-one' ? (
-              card[target.name] === target.value
-            ) : card[target.name].includes(target.value)
-          )),
       };
     });
+    this.verificaFiltro(target);
   }
 
   removeCard = (index) => {
@@ -113,13 +122,14 @@ class App extends React.Component {
   render() {
     const {
       info,
-      filter,
-      hasTrunfo,
-      dataCards,
+      filtered,
       datafilter,
+      dataCards,
+      hasTrunfo,
       isSaveButtonDisabled } = this.state;
-    const dataStart = (
-      filter.cardRare === 'todas' && filter.cardName === '') ? dataCards : datafilter;
+    const dataStart = (filtered
+      .cardRare !== 'todas' || filtered
+      .cardName !== '' || filtered.cardTrunfo) ? datafilter : dataCards;
     return (
       <div className="body-game">
         <h1>Trunfo</h1>
@@ -143,7 +153,7 @@ class App extends React.Component {
         </section>
         <section className="all-cards">
           <Filter
-            { ...filter }
+            { ...filtered }
             fullFilter={ this.fullFilter }
           />
           {
