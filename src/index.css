@@ -19,6 +19,33 @@ code {
   text-align: center;
 }
 
+.header {
+  color: white;
+}
+
+.form-add-card {
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  height: 1056px;
+  padding-top: 80px;
+  width: 763px;
+}
+
+.preview-card {
+  align-items: center;
+  background: #023031;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+  height: 1056px;
+  padding-top: 80px;
+  width: 763px;
+}
+
 .card-Create {
   display: flex;
   width: 1440px;

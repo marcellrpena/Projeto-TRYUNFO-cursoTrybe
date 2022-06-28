@@ -29,7 +29,6 @@ class App extends React.Component {
       const attrSoma = (
         parseInt(cardAttr1, 10) + parseInt(cardAttr2, 10) + parseInt(cardAttr3, 10)
       );
-      console.log(attrSoma);
       const limit = 210;
       const maior90 = 90;
       const menor0 = 0;
@@ -55,7 +54,7 @@ class App extends React.Component {
         cardRare: 'normal',
         cardTrunfo: false,
       },
-      dataCards: [prevState.dataCards, prevState.info],
+      dataCards: [...prevState.dataCards, prevState.info],
       isSaveButtonDisabled: true,
     }));
   }
@@ -63,38 +62,52 @@ class App extends React.Component {
   onInputChange = (event) => {
     const { target } = event;
     this.setState((prevState) => {
-      const { info } = prevState;
-      delete info[target.name];
+      const { info } = prevState; /* info é um Objeto contendo as informações antigas */
+      delete info[target.name]; /* O alvo trás uma informação nova para adicioná-la preciso apagar a antiga */
       return {
-        info: {
-          ...info,
+        info: { /* Objeto constituído por elementos do Objeto Info antigo e o novo elemento do Avlo */
+          ...info, /* usado o spreed para "transferir os elementos do objeto info antigo para o novo" */
           [target.name]: target.type === 'checkbox' ? target.checked : target.value,
         },
         hasTrunfo: target.type === 'checkbox' && target.checked,
       };
     });
-    this.verificaValues();
+    this.verificaValues(); /* valida se as novas informações são suficientes para ativar o botão salvar */
   }
 
   render() {
     const {
       info,
       hasTrunfo,
+      dataCards,
       isSaveButtonDisabled } = this.state;
     return (
       <div className="body-game">
         <h1>Trunfo</h1>
         <section className="card-Create">
-          <Form
-            { ...info }
-            hasTrunfo={ hasTrunfo }
-            isSaveButtonDisabled={ isSaveButtonDisabled }
-            onInputChange={ this.onInputChange }
-            onSaveButtonClick={ this.onSaveButtonClick }
-          />
-          <Card
-            { ...info }
-          />
+          <div className="form-add-card">
+            <h1>Adicionar Nova Carta</h1>
+            <Form
+              { ...info } /* usando o spreed para passar props de mesmo nome para o filho */
+              hasTrunfo={ hasTrunfo }
+              isSaveButtonDisabled={ isSaveButtonDisabled }
+              onInputChange={ this.onInputChange }
+              onSaveButtonClick={ this.onSaveButtonClick }
+            />
+          </div>
+          <div className="preview-card">
+            <h1 className="header">Pré-visualização</h1>
+            <Card
+              { ...info }
+            />
+          </div>
+        </section>
+        <section>
+          <h1>Pré-visualização</h1>
+          {
+            dataCards.map((card, index) => (
+              <Card key={ index } { ...card } />))
+          }
         </section>
       </div>
     );
