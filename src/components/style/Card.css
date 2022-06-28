@@ -1,21 +1,20 @@
 .card-external {
-  display: flex;
   align-items: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+  display: flex;
+  height: 549px;
   justify-content: center;
   width: 368px;
-  height: 549px;
-
-  background: #FFFFFF;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
 }
 
 .card-internal {
-  width: 348px;
+  background: #036b52;
+  border-radius: 10px;
   height: 529px;
   padding: 16px;
-  background: #036B52;
-  border-radius: 10px;
+  width: 348px;
 }
 
 .input-form {
