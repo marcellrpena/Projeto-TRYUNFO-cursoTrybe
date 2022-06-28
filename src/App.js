@@ -1,29 +1,31 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
-import data from './components/data';
+/* import data from './components/data'; */
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '0',
-      cardAttr2: '0',
-      cardAttr3: '0',
-      cardImage: '',
-      cardRare: 'normal',
-      cardTrunfo: false,
+      info: {
+        cardName: '',
+        cardDescription: '',
+        cardAttr1: '0',
+        cardAttr2: '0',
+        cardAttr3: '0',
+        cardImage: '',
+        cardRare: 'normal',
+        cardTrunfo: false,
+      },
       hasTrunfo: false,
       isSaveButtonDisabled: true,
-      dataCards: data,
+      dataCards: [],
     };
   }
 
   verificaValues = () => {
     this.setState((prevState) => {
-      const { cardAttr1, cardAttr2, cardAttr3 } = prevState;
+      const { cardAttr1, cardAttr2, cardAttr3 } = prevState.info;
       const attrSoma = (
         parseInt(cardAttr1, 10) + parseInt(cardAttr2, 10) + parseInt(cardAttr3, 10)
       );
@@ -33,7 +35,7 @@ class App extends React.Component {
       const menor0 = 0;
       return ({
         isSaveButtonDisabled: Object
-          .values(prevState)
+          .values(prevState.info)
           .some((prop) => (
             prop === '' || prop > maior90 || prop < menor0 || attrSoma > limit)),
       });
@@ -43,37 +45,40 @@ class App extends React.Component {
   onSaveButtonClick = (event) => {
     event.preventDefault();
     this.setState((prevState) => ({
-      cardName: '',
-      cardDescription: '',
-      cardAttr1: '0',
-      cardAttr2: '0',
-      cardAttr3: '0',
-      cardImage: '',
-      cardRare: 'normal',
-      cardTrunfo: false,
-      dataCards: [...prevState.dataCards, prevState],
+      info: {
+        cardName: '',
+        cardDescription: '',
+        cardAttr1: '0',
+        cardAttr2: '0',
+        cardAttr3: '0',
+        cardImage: '',
+        cardRare: 'normal',
+        cardTrunfo: false,
+      },
+      dataCards: [prevState.dataCards, prevState.info],
+      isSaveButtonDisabled: true,
     }));
   }
 
   onInputChange = (event) => {
     const { target } = event;
-    this.setState({
-      [target.name]: target.type === 'checkbox' ? target.checked : target.value,
-      hasTrunfo: target.type === 'checkbox' && target.checked,
+    this.setState((prevState) => {
+      const { info } = prevState;
+      delete info[target.name];
+      return {
+        info: {
+          ...info,
+          [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+        },
+        hasTrunfo: target.type === 'checkbox' && target.checked,
+      };
     });
     this.verificaValues();
   }
 
   render() {
     const {
-      cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      cardTrunfo,
+      info,
       hasTrunfo,
       isSaveButtonDisabled } = this.state;
     return (
@@ -81,29 +86,14 @@ class App extends React.Component {
         <h1>Trunfo</h1>
         <section className="card-Create">
           <Form
-            cardName={ cardName }
-            cardDescription={ cardDescription }
-            cardAttr1={ cardAttr1 }
-            cardAttr2={ cardAttr2 }
-            cardAttr3={ cardAttr3 }
-            cardImage={ cardImage }
-            cardRare={ cardRare }
-            cardTrunfo={ cardTrunfo }
+            { ...info }
             hasTrunfo={ hasTrunfo }
             isSaveButtonDisabled={ isSaveButtonDisabled }
             onInputChange={ this.onInputChange }
             onSaveButtonClick={ this.onSaveButtonClick }
-            formCardData={ this.state }
           />
           <Card
-            cardName={ cardName }
-            cardDescription={ cardDescription }
-            cardAttr1={ cardAttr1 }
-            cardAttr2={ cardAttr2 }
-            cardAttr3={ cardAttr3 }
-            cardImage={ cardImage }
-            cardRare={ cardRare }
-            cardTrunfo={ cardTrunfo }
+            { ...info }
           />
         </section>
       </div>

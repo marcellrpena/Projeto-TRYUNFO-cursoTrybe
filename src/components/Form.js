@@ -17,7 +17,11 @@ class Form extends React.Component {
       isSaveButtonDisabled,
       onSaveButtonClick,
       onInputChange } = this.props;
-
+    const attrSoma = (
+      parseInt(cardAttr1, 10) + parseInt(cardAttr2, 10) + parseInt(cardAttr3, 10)
+    );
+    const AttrLimit = 210;
+    const AttrRest = AttrLimit - attrSoma;
     return (
       <div className="form-add-card">
         <h1>Adicionar Nova Carta</h1>
@@ -94,6 +98,7 @@ class Form extends React.Component {
               max={ 90 }
             />
           </label>
+          <p>{ `Pontos Restantes = ${AttrRest}` }</p>
           <label htmlFor="Imagem-Link" className="mb-3 input-group">
             <span className="input-group-text">Link</span>
             <input
