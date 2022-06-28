@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import Filter from './components/Filter';
 /* import data from './components/data'; */
 
 class App extends React.Component {
@@ -18,7 +19,8 @@ class App extends React.Component {
         cardTrunfo: false,
       },
       filter: {
-        filterName: '',
+        cardName: '',
+        cardRare: 'todas',
       },
       hasTrunfo: false,
       isSaveButtonDisabled: true,
@@ -82,13 +84,23 @@ class App extends React.Component {
 
   fullFilter = (e) => {
     const { target } = e;
-    this.setState((prevState) => ({
-      filter: {
-        filterName: target.value,
-      },
-      datafilter: prevState.dataCards
-        .filter((card) => card[target.name].includes(target.value)),
-    }));
+    console.log(target.type);
+    this.setState((prevState) => {
+      const { filter } = prevState;
+      delete filter[target.name];
+      return {
+        filter: {
+          ...filter,
+          [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+        },
+        datafilter: prevState.dataCards
+          .filter((card) => (
+            target.type === 'select-one' ? (
+              card[target.name] === target.value
+            ) : card[target.name].includes(target.value)
+          )),
+      };
+    });
   }
 
   removeCard = (index) => {
@@ -106,8 +118,8 @@ class App extends React.Component {
       dataCards,
       datafilter,
       isSaveButtonDisabled } = this.state;
-    const fullfilter = (
-      datafilter.length === 0 && filter.filterName === '' ? dataCards : datafilter);
+    const dataStart = (
+      filter.cardRare === 'todas' && filter.cardName === '') ? dataCards : datafilter;
     return (
       <div className="body-game">
         <h1>Trunfo</h1>
@@ -130,19 +142,12 @@ class App extends React.Component {
           </div>
         </section>
         <section className="all-cards">
-          <aside className="left-side">
-            <h1>Todas as cartas</h1>
-            <input
-              data-testid="name-filter"
-              type="text"
-              name="cardName"
-              placeholder="Nome da Carta"
-              value={ filter.filterName }
-              onChange={ (e) => this.fullFilter(e) }
-            />
-          </aside>
+          <Filter
+            { ...filter }
+            fullFilter={ this.fullFilter }
+          />
           {
-            fullfilter.map((card, index) => (
+            dataStart.map((card, index) => (
               <div key={ index } className="all-card">
                 <Card { ...card } />
                 <button
