@@ -103,7 +103,7 @@ class App extends React.Component {
           </div>
         </section>
         <section>
-          <h1>Pré-visualização</h1>
+          <h1>Todas as cartas</h1>
           {
             dataCards.map((card, index) => (
               <Card key={ index } { ...card } />))
