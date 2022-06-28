@@ -69,10 +69,18 @@ class App extends React.Component {
           ...info, /* usado o spreed para "transferir os elementos do objeto info antigo para o novo" */
           [target.name]: target.type === 'checkbox' ? target.checked : target.value,
         },
-        hasTrunfo: target.type === 'checkbox' && target.checked,
+        hasTrunfo: (
+          target.type === 'checkbox' && target.checked) || (prevState.hasTrunfo),
       };
     });
     this.verificaValues(); /* valida se as novas informações são suficientes para ativar o botão salvar */
+  }
+
+  removeCard = (index) => {
+    this.setState((prevState) => ({
+      dataCards: prevState.dataCards.filter((card, idx) => idx !== index && card),
+      hasTrunfo: !prevState.dataCards[index].cardTrunfo,
+    }));
   }
 
   render() {
@@ -103,11 +111,25 @@ class App extends React.Component {
           </div>
         </section>
         <section>
-          <h1>Todas as cartas</h1>
-          {
-            dataCards.map((card, index) => (
-              <Card key={ index } { ...card } />))
-          }
+          <aside>
+            <h1>Todas as cartas</h1>
+          </aside>
+          <aside>
+            {
+              dataCards.map((card, index) => (
+                <div key={ index }>
+                  <Card { ...card } />
+                  <button
+                    data-testid="delete-button"
+                    type="button"
+                    onClick={ () => this.removeCard(index) }
+                  >
+                    Excluir
+                  </button>
+                </div>
+              ))
+            }
+          </aside>
         </section>
       </div>
     );
