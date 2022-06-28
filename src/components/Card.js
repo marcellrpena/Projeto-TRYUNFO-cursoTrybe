@@ -17,20 +17,48 @@ class Card extends React.Component {
     return (
       <div className="card-external">
         <div className="card-internal">
-          <h4 data-testid="name-card">{ cardName }</h4>
-          <img
-            data-testid="image-card"
-            src={ cardImage }
-            alt={ cardName }
-          />
-          <p data-testid="description-card">{ cardDescription }</p>
-          <p data-testid="attr1-card">{ `Attr02....................${cardAttr1}` }</p>
-          <p data-testid="attr2-card">{ `Attr02....................${cardAttr2}` }</p>
-          <p data-testid="attr3-card">{ `Attr02....................${cardAttr3}` }</p>
-          <h4 data-testid="rare-card">{ cardRare }</h4>
-          {
-            cardTrunfo && <h4 data-testid="trunfo-card">Super Trunfo</h4>
-          }
+          <div className="name-image">
+            <h4 className="card-name" data-testid="name-card">{ cardName }</h4>
+            <img
+              className="card-image"
+              data-testid="image-card"
+              src={ cardImage }
+              alt={ cardName }
+            />
+          </div>
+          <div className="card-description">
+            <p
+              data-testid="description-card"
+            >
+              { cardDescription }
+            </p>
+          </div>
+          <div className="card-atributo">
+            <div className="text-attr">
+              <span className="text">Attr01...................</span>
+              <p data-testid="attr1-card" className="attr-number">{cardAttr1}</p>
+            </div>
+            <div className="text-attr">
+              <span className="text">Attr02...................</span>
+              <p data-testid="attr2-card" className="attr-number">{cardAttr2}</p>
+            </div>
+            <div className="text-attr">
+              <span className="text">Attr03...................</span>
+              <p data-testid="attr3-card" className="attr-number">{cardAttr3}</p>
+            </div>
+            <h5 data-testid="rare-card" className="zero-margin">{ cardRare }</h5>
+            <div className="trunfo">
+              {
+                cardTrunfo && (
+                  <h5
+                    data-testid="trunfo-card"
+                    className="zero-margin"
+                  >
+                    Super Trunfo
+                  </h5>)
+              }
+            </div>
+          </div>
         </div>
       </div>
     );
