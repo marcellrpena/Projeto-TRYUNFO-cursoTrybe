@@ -48,16 +48,16 @@ class App extends React.Component {
     });
   }
 
-  verificaFiltro = (target) => {
+  verificaFiltro = (event) => {
+    const { target } = event;
     this.setState((prevState) => ({
-      datafilter: target
-        .type === 'checkbox' ? prevState.dataCards
-          .filter((trunfo) => trunfo.cardTrunfo === true) : prevState.dataCards
-          .filter((card) => (
-            target.type === 'select-one' ? (
-              card[target.name] === target.value
-            ) : card[target.name].includes(target.value)
-          )),
+      filtered: {
+        cardName: '',
+        cardRare: 'todas',
+        cardTrunfo: target.checked,
+      },
+      datafilter: target.checked ? prevState.dataCards
+        .filter((card) => card.cardTrunfo === true) : prevState.dataCards,
     }
     ));
   };
@@ -105,11 +105,15 @@ class App extends React.Component {
       return {
         filtered: {
           ...filtered,
-          [target.name]: target.type === 'checkbox' ? target.checked : target.value,
+          [target.name]: target.value,
         },
+        datafilter: prevState.dataCards.filter((card) => (
+          target.type === 'select-one' ? (
+            card[target.name] === target.value
+          ) : card[target.name].includes(target.value)
+        )),
       };
     });
-    this.verificaFiltro(target);
   }
 
   removeCard = (index) => {
@@ -155,6 +159,7 @@ class App extends React.Component {
           <Filter
             { ...filtered }
             fullFilter={ this.fullFilter }
+            verificaFiltro={ this.verificaFiltro }
           />
           {
             dataStart.map((card, index) => (

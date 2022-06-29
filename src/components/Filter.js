@@ -8,6 +8,7 @@ class Form extends React.Component {
       cardName,
       cardRare,
       cardTrunfo,
+      verificaFiltro,
       fullFilter } = this.props;
     return (
       <aside className="left-side input-form">
@@ -41,17 +42,17 @@ class Form extends React.Component {
           </select>
         </label>
         <label
-          htmlFor="checkbox"
+          htmlFor="filter-checkbox"
           className="mb-3 space-inline"
         >
           <input
             type="checkbox"
             checked={ cardTrunfo }
-            onChange={ fullFilter }
+            onChange={ verificaFiltro }
             name="cardTrunfo"
             data-testid="trunfo-filter"
             className="form-check-input"
-            id="checkbox"
+            id="filter-checkbox"
           />
           <span className="form-check-label">Super Trybe Trunfo</span>
         </label>
@@ -65,6 +66,7 @@ Form.propTypes = {
   cardRare: PropTypes.string.isRequired,
   cardTrunfo: PropTypes.bool.isRequired,
   fullFilter: PropTypes.func.isRequired,
+  verificaFiltro: PropTypes.func.isRequired,
 };
 
 export default Form;
