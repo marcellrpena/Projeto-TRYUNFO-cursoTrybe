@@ -21,6 +21,7 @@ class Card extends React.Component {
             <h4 className="card-name" data-testid="name-card">{ cardName }</h4>
             <div className="card-image">
               <img
+                className="image"
                 data-testid="image-card"
                 src={ cardImage }
                 alt={ cardName }
@@ -28,11 +29,11 @@ class Card extends React.Component {
             </div>
           </div>
           <div className="card-description">
-            <p
+            <h6
               data-testid="description-card"
             >
               { cardDescription }
-            </p>
+            </h6>
           </div>
           <div className="card-atributo">
             <div className="text-attr">
