@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Projeto-TRYUNFO-cursoTrybe/static/css/main.00b544be.css",
+    "main.js": "/Projeto-TRYUNFO-cursoTrybe/static/js/main.0fa6d4c2.js",
+    "index.html": "/Projeto-TRYUNFO-cursoTrybe/index.html",
+    "main.00b544be.css.map": "/Projeto-TRYUNFO-cursoTrybe/static/css/main.00b544be.css.map",
+    "main.0fa6d4c2.js.map": "/Projeto-TRYUNFO-cursoTrybe/static/js/main.0fa6d4c2.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.00b544be.css",
+    "static/js/main.0fa6d4c2.js"
+  ]
+}
